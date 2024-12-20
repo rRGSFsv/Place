@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Агенство Нерухомості "Простір"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="background-container">
+        <div class="background"></div>
+        <div class="centered-text">
+            <h1>Агенство Нерухомості <br>"Простір"</h1>
+            <div class="text-animation">
+                <p class="typing-text">Телефонуйте або пишть:</p>
+            </div>
+            <p>+380672263584</p>
+        </div>
+
+        <!-- Кнопки поверх картинки -->
+        <div class="call-btn-container">
+            <a href="tel:+380672263584" class="call-btn">Позвонить</a>
+            <a href="https://t.me/yourTelegramUsername" class="telegram-btn" target="_blank">Написать в Telegram</a>
+        </div>
+
+        <div class="social-icons">
+            <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+
+ 
+   
+
+    <section class="catalog-section">
+ <div class="catalog-header">
+        <div class="filter-container">
+            <button class="filter-btn" onclick="filterItems('all')">Все</button>
+            <button class="filter-btn" onclick="filterItems('rent')">Аренда</button>
+            <button class="filter-btn" onclick="filterItems('sale')">Продажа</button>
+        </div>
+        <h2>Каталог об`єктів</h2>
+    </div>
+        <!-- Первый блок с адресом "Лаврская, 16" -->
+        <div class="catalog-item" data-category="rent">
+            <div class="image-slider" id="slider1">
+                <div class="images">
+                    <img src="House1.jpg" alt="Объект 1">
+                    <img src="House2.jpg" alt="Объект 2">
+                    <img src="House3.jpg" alt="Объект 3">
+                </div>
+                <button class="prev" onclick="moveSlide(-1, 'slider1')">&#10094;</button>
+                <button class="next" onclick="moveSlide(1, 'slider1')">&#10095;</button>
+            </div>
+            <div class="object-details">
+                <h3>Название объекта</h3>
+                <p class="address">Адрес: ул. Лаврская, 16, Киев, Украина, 02000</p>
+                <div id="map1" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+
+        <!-- Второй блок с адресом "Фанерная ул., 4" -->
+        <div class="catalog-item" data-category="sale">
+            <div class="image-slider" id="slider2">
+                <div class="images">
+                    <img src="Room1.jpg" alt="Комната 1">
+                    <img src="Room2.jpg" alt="Комната 2">
+                    <img src="Room3.jpg" alt="Комната 3">
+                </div>
+                <button class="prev" onclick="moveSlide(-1, 'slider2')">&#10094;</button>
+                <button class="next" onclick="moveSlide(1, 'slider2')">&#10095;</button>
+            </div>
+            <div class="object-details">
+                <h3>Название объекта</h3>
+                <p class="address">Адрес: ул. Фанерная, 4, Киев, Украина, 02000</p>
+                <div id="map2" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>&copy; 2024 Агенство Нерухомості "Простір". Все права защищены.</p>
+        <p><a href="mailto:info@agency.com">Контактный email</a> | <a href="tel:+380672263584">Позвонить</a></p>
+    </div>
+
+    <script>
+        // Функция фильтрации объектов
+        function filterItems(category) {
+            const items = document.querySelectorAll('.catalog-item');
+            items.forEach(item => {
+                if (item.getAttribute('data-category') === category || category === 'all') {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Функции для слайдера
+        let slideIndices = { slider1: 0, slider2: 0 };
+
+        function showSlides(sliderId) {
+            const slides = document.querySelectorAll(`#${sliderId} .images img`);
+            const currentIndex = slideIndices[sliderId];
+
+            if (currentIndex >= slides.length) {
+                slideIndices[sliderId] = 0;
+            }
+            if (currentIndex < 0) {
+                slideIndices[sliderId] = slides.length - 1;
+            }
+
+            slides.forEach(slide => slide.style.display = "none");
+            slides[slideIndices[sliderId]].style.display = "block";
+        }
+
+        function moveSlide(n, sliderId) {
+            slideIndices[sliderId] += n;
+            showSlides(sliderId);
+        }
+
+        window.onload = function() {
+            showSlides('slider1');
+            showSlides('slider2');
+        };
+    </script>
+</body>
+</html>
